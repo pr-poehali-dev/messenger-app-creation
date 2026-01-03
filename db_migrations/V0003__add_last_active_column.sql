@@ -1,0 +1,2 @@
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_active TIMESTAMP WITH TIME ZONE;
+CREATE INDEX IF NOT EXISTS idx_users_last_active ON users(last_active DESC);

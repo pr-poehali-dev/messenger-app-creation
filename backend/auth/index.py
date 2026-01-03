@@ -45,10 +45,19 @@ def handler(event: dict, context) -> dict:
         cur = conn.cursor(cursor_factory=RealDictCursor)
         
         cur.execute(
-            "SELECT id, username, phone, display_name, bio, avatar_url FROM users WHERE username = %s OR phone = %s",
+            "SELECT id, username, phone, display_name, bio, avatar_url, is_blocked, blocked_reason, is_admin FROM users WHERE username = %s OR phone = %s",
             (username, phone)
         )
         user = cur.fetchone()
+        
+        if user and user['is_blocked']:
+            conn.close()
+            return {
+                'statusCode': 403,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'error': 'Account blocked', 'reason': user['blocked_reason']}),
+                'isBase64Encoded': False
+            }
         
         if user:
             conn.close()
@@ -61,7 +70,8 @@ def handler(event: dict, context) -> dict:
                     'phone': user['phone'],
                     'display_name': user['display_name'],
                     'bio': user['bio'],
-                    'avatar_url': user['avatar_url']
+                    'avatar_url': user['avatar_url'],
+                    'is_admin': user['is_admin']
                 }),
                 'isBase64Encoded': False
             }

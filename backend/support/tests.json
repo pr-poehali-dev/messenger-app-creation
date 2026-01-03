@@ -1,0 +1,29 @@
+{
+  "tests": [
+    {
+      "name": "Create support ticket",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "action": "create_ticket",
+        "user_id": 1,
+        "subject": "Test ticket",
+        "message": "Need help"
+      },
+      "expectedStatus": 201,
+      "expectedBody": {
+        "ticket_id": "number",
+        "created_at": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get tickets by user",
+      "method": "GET",
+      "path": "/?action=tickets&user_id=1",
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "partial"
+    }
+  ]
+}

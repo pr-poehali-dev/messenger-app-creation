@@ -1,0 +1,39 @@
+{
+  "tests": [
+    {
+      "name": "Get all users",
+      "method": "GET",
+      "path": "/?action=users",
+      "headers": {
+        "X-Admin-Id": "1"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "0": {
+          "id": "number",
+          "username": "string"
+        }
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Block user",
+      "method": "POST",
+      "path": "/",
+      "headers": {
+        "X-Admin-Id": "1",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "action": "block_user",
+        "user_id": 2,
+        "reason": "Test blocking"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

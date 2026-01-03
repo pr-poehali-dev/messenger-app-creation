@@ -91,4 +91,19 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    body {
+      min-height: -webkit-fill-available;
+    }
+  }
 }
