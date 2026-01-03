@@ -1,0 +1,20 @@
+{
+  "tests": [
+    {
+      "name": "Register new user",
+      "method": "POST",
+      "body": {
+        "username": "testuser",
+        "phone": "+79991234567",
+        "display_name": "Test User"
+      },
+      "expectedStatus": 201,
+      "expectedBody": {
+        "user_id": "number",
+        "username": "string",
+        "display_name": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
